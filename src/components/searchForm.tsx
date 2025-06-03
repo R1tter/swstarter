@@ -1,115 +1,75 @@
 'use client';
 
-import { useState } from 'react';
+import { useSearch } from '../hooks/useSearch';
 import ResultsList from './ResultsList';
 
-type ResultItem = {
-  uid: string;
-  name: string;
-  url: string;
-  properties?: {
-    name?: string;
-  };
-};
-
 export default function SearchForm() {
-  const [type, setType] = useState<'people' | 'movies'>('people');
-  const [query, setQuery] = useState('');
-  const [results, setResults] = useState<ResultItem[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  const handleSearch = async () => {
-    setLoading(true);
-    setResults([]);
-
-    try {
-      const res = await fetch(`/api/search?type=${type}&query=${query}`);
-      const raw = await res.json();
-
-      const parsedResults = (raw.results || []).map((r: unknown) => {
-        const item = r as ResultItem & { properties?: { name?: string } };
-        return {
-          uid: item.uid,
-          url: item.url || '',
-          name: item.name || item.properties?.name || 'Unnamed',
-        };
-      });
-
-      setResults(parsedResults);
-
-      // 🔄 Registrar a busca para estatísticas
-      await fetch('/api/track', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query, type }),
-      });
-
-    } catch (error) {
-      console.error('Search error:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const {
+    type,
+    query,
+    results,
+    loading,
+    setType,
+    setQuery,
+    handleSearch,
+  } = useSearch();
 
   return (
-    <div className="flex flex-col md:flex-row gap-[15px] mt-[40px] w-full max-w-[720px] mx-auto">
-      {/* Formulário de busca */}
-      <div className="bg-white p-[15px] rounded-[2px] shadow-md w-[205px] h-[115px] border border-[#dadada]">
-        <div className="mb-2 text-sm text-gray-900 font-medium">
-          What are you searching for?
+    <div className="flex justify-center items-center min-h-[calc(100vh-45px)]">
+      <div className="flex gap-8">
+        {/* Search Container */}
+        <div className="bg-gray-50 border-2 border-gray-300 shadow-md rounded-md p-6 flex flex-col justify-between w-[410px] h-[250px]">
+          <p className="text-base text-black font-medium mb-2">
+            What are you searching for?
+          </p>
+          <div className="flex items-center font-bold gap-4 mb-3 text-base">
+            {['people', 'movies'].map((option) => (
+              <label key={option} className="flex items-center gap-1">
+                <input
+                  type="radio"
+                  name="type"
+                  value={option}
+                  checked={type === option}
+                  onChange={() => setType(option as 'people' | 'movies')}
+                  className="#0094ff"
+                />
+                {option.charAt(0).toUpperCase() + option.slice(1)}
+              </label>
+            ))}
+          </div>
+
+          <input
+            className="w-full px-3 py-2 text-base font-bold border-2 border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-teal"
+            placeholder={
+              type === 'people'
+                ? 'e.g. Chewbacca, Yoda, Boba Fett'
+                : 'e.g. Return of the Jedi'
+            }
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            aria-label={`Search ${type}`}
+          />
+
+          <button
+            onClick={handleSearch}
+            disabled={!query.trim() || loading}
+            className={`w-full py-2 text-base font-bold rounded-full transition mt-auto ${
+              !query.trim()
+                ? 'bg-gray-300 text-white cursor-not-allowed'
+                : 'bg-green-500 text-white'
+            }`}
+            style={{ background: !query.trim() ? undefined : undefined }}
+          >
+            {loading ? 'Searching...' : 'SEARCH'}
+          </button>
         </div>
-        <div className="flex items-center gap-3 mb-2 text-sm">
-          <label className="flex items-center gap-1">
-            <input
-              type="radio"
-              name="type"
-              value="people"
-              checked={type === 'people'}
-              onChange={() => setType('people')}
-            />
-            People
-          </label>
-          <label className="flex items-center gap-1">
-            <input
-              type="radio"
-              name="type"
-              value="movies"
-              checked={type === 'movies'}
-              onChange={() => setType('movies')}
-            />
-            Movies
-          </label>
+
+        {/* Results Container */}
+        <div className="bg-white border-2 border-gray-300 shadow-2xl rounded-md p-6 flex flex-col w-[650px] h-[650px]">
+          <h2 className="text-lg font-bold mb-2 text-gray-900">Results</h2>
+          <hr className="mb-2 border-gray-300" />
+          <ResultsList results={results} loading={loading} />
         </div>
-
-        <input
-          className="w-full px-2 py-[5px] text-sm border border-[#dadada] rounded-[2px] mb-[10px]"
-          placeholder={
-            type === 'people'
-              ? 'e.g. Chewbacca, Yoda, Boba Fett'
-              : 'e.g. Return of the Jedi'
-          }
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-
-        <button
-          onClick={handleSearch}
-          disabled={!query.trim() || loading}
-          className={`w-full py-[6px] text-sm font-bold rounded-full transition ${
-            !query.trim()
-              ? 'bg-gray-400 text-white cursor-not-allowed'
-              : 'bg-green-500 hover:bg-green-600 text-white'
-          }`}
-        >
-          {loading ? 'Searching...' : 'SEARCH'}
-        </button>
-      </div>
-
-      {/* Resultados */}
-      <div className="bg-white rounded-[2px] shadow-md p-[15px] w-[291px] h-[291px] border border-[#dadada]">
-        <h2 className="text-sm font-semibold mb-2 text-gray-900">Results</h2>
-        <hr className="mb-2 border-gray-300" />
-        <ResultsList results={results} />
       </div>
     </div>
   );

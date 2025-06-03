@@ -12,13 +12,20 @@ type ResultsListProps = {
   results: ResultItem[];
 };
 
-export default function ResultsList({ results }: ResultsListProps) {
+export default function ResultsList({ results, loading }: ResultsListProps & { loading?: boolean }) {
+  if (loading) {
+    return (
+      <div className="flex flex-col justify-center items-center h-full min-h-[180px]">
+        <span className="text-gray-300 font-bold text-center text-lg">Searching...</span>
+      </div>
+    );
+  }
   if (!results || results.length === 0) {
     return (
-      <div className="text-gray-500 text-center py-4">
-        There are zero matches.
-        <br />
-        Use the form to search for People or Movies.
+      <div className="flex flex-col justify-center items-center h-full min-h-[180px]">
+        <span className="text-gray-300 font-bold text-center text-lg">
+          There are zero matches.<br />Use the form to search for People or Movies.
+        </span>
       </div>
     );
   }
@@ -33,12 +40,18 @@ export default function ResultsList({ results }: ResultsListProps) {
         const name = item.name || 'Unnamed';
 
         return (
-          <li key={id} className="flex justify-between items-center px-4 py-2">
-            <span className="text-gray-800 font-medium">{name}</span>
-            <Link href={`/${type}/${id}`}>
-              <button className="bg-green-500 text-white px-4 py-1 rounded-full hover:bg-green-600 transition">
-                SEE DETAILS
-              </button>
+          <li
+            key={id}
+            className="flex items-center justify-between gap-4 px-0 py-2 min-h-[44px]"
+          >
+            <span
+              className="text-gray-800 font-bold truncate max-w-[60%]"
+              title={name}
+            >
+              {name}
+            </span>
+            <Link href={`/${type}/${id}`} className="flex-shrink-0 bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600 transition text-[15px] font-bold min-w-[120px] text-center block">
+              SEE DETAILS
             </Link>
           </li>
         );

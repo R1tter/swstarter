@@ -4,9 +4,11 @@ import SearchForm from "@/components/searchForm";
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-[#f2f2f2] text-black flex flex-col items-center px-4">
+    <main className="bg-[#ededed] min-h-screen flex flex-col items-center">
       <PageHeader />
-      <SearchForm />
+      <div className="flex justify-center items-center w-full max-w-3xl mt-10">
+        <SearchForm />
+      </div>
     </main>
   );
 }

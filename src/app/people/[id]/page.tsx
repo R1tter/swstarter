@@ -1,3 +1,6 @@
+import BackButton from '@/components/BackButton';
+import PageHeader from '@/components/pageHeader';
+
 export const dynamic = 'force-dynamic';
 
 type Params = {
@@ -14,24 +17,36 @@ export default async function PersonDetails({ params }: Params) {
   if (!person) return <div>Person not found.</div>;
 
   return (
-    <div className="min-h-screen bg-[#f2f2f2] flex flex-col items-center justify-center text-gray-800">
-      <div className="bg-white rounded shadow p-6 w-full max-w-xl">
-        <h1 className="text-2xl font-bold mb-4">{person.name}</h1>
-        <h2 className="text-lg font-semibold mb-2">Details</h2>
-        <ul className="text-sm">
-          <li><strong>Birth Year:</strong> {person.birth_year}</li>
-          <li><strong>Gender:</strong> {person.gender}</li>
-          <li><strong>Eye Color:</strong> {person.eye_color}</li>
-          <li><strong>Hair Color:</strong> {person.hair_color}</li>
-          <li><strong>Height:</strong> {person.height}</li>
-          <li><strong>Mass:</strong> {person.mass}</li>
-        </ul>
-        <button
-          onClick={() => history.back()}
-          className="mt-4 bg-green-500 text-white px-4 py-2 rounded-full"
-        >
-          BACK TO SEARCH
-        </button>
+    <div className="bg-[#ededed] min-h-screen flex flex-col items-center">
+      <PageHeader />
+      <div className="flex flex-1 w-full justify-center items-start pt-[40px]">
+        <div className="bg-white border border-blue-300 rounded-md shadow p-8 w-full max-w-[900px] min-h-[450px] flex flex-col">
+          <div className="mb-6">
+            <h1 className="text-xl font-bold mb-4">{person.name}</h1>
+            <div className="flex flex-col md:flex-row gap-8 items-start md:items-start">
+              <div className="w-full md:w-1/2 flex flex-col">
+                <h2 className="text-base font-semibold mb-2">Details</h2>
+                <hr className="mb-2 border-[#ededed]" />
+                <ul className="text-sm">
+                  <li>Birth Year: {person.birth_year}</li>
+                  <li>Gender: {person.gender}</li>
+                  <li>Eye Color: {person.eye_color}</li>
+                  <li>Hair Color: {person.hair_color}</li>
+                  <li>Height: {person.height}</li>
+                  <li>Mass: {person.mass}</li>
+                </ul>
+              </div>
+              <div className="w-full md:w-1/2 flex flex-col">
+                <h2 className="text-base font-semibold mb-2">Movies</h2>
+                <hr className="mb-2 border-[#ededed]" />
+                {/* Aqui você pode renderizar os filmes se tiver essa informação */}
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-start mt-auto">
+            <BackButton />
+          </div>
+        </div>
       </div>
     </div>
   );
