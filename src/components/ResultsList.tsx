@@ -1,18 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-
-type ResultItem = {
-  uid: string;
-  name?: string;
-  url: string;
-};
+import type { ResultItem } from '@/hooks/useSearch';
 
 type ResultsListProps = {
   results: ResultItem[];
+  type?: 'people' | 'movies';
 };
 
-export default function ResultsList({ results, loading }: ResultsListProps & { loading?: boolean }) {
+export default function ResultsList({ results, loading, type }: ResultsListProps & { loading?: boolean }) {
   if (loading) {
     return (
       <div className="flex flex-col justify-center items-center h-full min-h-[180px]">
@@ -35,9 +31,9 @@ export default function ResultsList({ results, loading }: ResultsListProps & { l
       {results.map((item) => {
         const id = item.uid;
         const url = item.url || '';
-        const isFilm = url.includes('/films/');
-        const type = isFilm ? 'movies' : 'people';
-        const name = item.name || 'Unnamed';
+        // Se a prop type for passada, usa ela, senão detecta pelo url
+        const itemType: 'people' | 'movies' = type || (url.includes('/films/') ? 'movies' : 'people');
+        const name = item.name || item.properties?.name || 'Unnamed';
 
         return (
           <li
@@ -50,7 +46,7 @@ export default function ResultsList({ results, loading }: ResultsListProps & { l
             >
               {name}
             </span>
-            <Link href={`/${type}/${id}`} className="flex-shrink-0 bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600 transition text-[15px] font-bold min-w-[120px] text-center block">
+            <Link href={`/${itemType}/${id}`} className="flex-shrink-0 bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600 transition text-[15px] font-bold min-w-[120px] text-center block">
               SEE DETAILS
             </Link>
           </li>

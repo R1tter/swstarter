@@ -1,5 +1,5 @@
-import BackButton from '@/components/BackButton';
 import PageHeader from '@/components/pageHeader';
+import DetailLayout from '@/components/DetailLayout';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,37 +16,58 @@ export default async function PersonDetails({ params }: Params) {
 
   if (!person) return <div>Person not found.</div>;
 
+  // Monta o conteúdo dos detalhes
+  const details = (
+    <ul className="text-sm">
+      <li>Birth Year: {person.birth_year}</li>
+      <li>Gender: {person.gender}</li>
+      <li>Eye Color: {person.eye_color}</li>
+      <li>Hair Color: {person.hair_color}</li>
+      <li>Height: {person.height}</li>
+      <li>Mass: {person.mass}</li>
+    </ul>
+  );
+
+  // Busca todos os filmes e filtra os que contêm este personagem
+  let movies = <span className="text-sm text-gray-500">No movies available.</span>;
+  try {
+    const filmsRes = await fetch('https://www.swapi.tech/api/films');
+    const filmsData = await filmsRes.json();
+    if (Array.isArray(filmsData.result)) {
+      type FilmSummary = { uid: string; url: string; properties?: { title?: string; characters?: string[] } };
+      const films: { id: string; title: string }[] = filmsData.result.filter((film: FilmSummary) => {
+        return film.properties?.characters?.some((url: string) => url.endsWith(`/people/${params.id}`));
+      }).map((film: FilmSummary) => ({
+        id: film.uid,
+        title: film.properties?.title || film.uid,
+      }));
+      if (films.length > 0) {
+        movies = (
+          <ul className="text-sm">
+            {films.map((film) => (
+              <li key={film.id}>
+                <a href={`/movies/${film.id}`} className="text-blue-600 underline hover:text-blue-800">
+                  {film.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        );
+      }
+    }
+  } catch {}
+
   return (
-    <div className="bg-[#ededed] min-h-screen flex flex-col items-center">
+    <div className="bg-[#ededed] min-h-screen flex flex-col items-center text-black">
       <PageHeader />
       <div className="flex flex-1 w-full justify-center items-start pt-[40px]">
-        <div className="bg-white border border-blue-300 rounded-md shadow p-8 w-full max-w-[900px] min-h-[450px] flex flex-col">
-          <div className="mb-6">
-            <h1 className="text-xl font-bold mb-4">{person.name}</h1>
-            <div className="flex flex-col md:flex-row gap-8 items-start md:items-start">
-              <div className="w-full md:w-1/2 flex flex-col">
-                <h2 className="text-base font-semibold mb-2">Details</h2>
-                <hr className="mb-2 border-[#ededed]" />
-                <ul className="text-sm">
-                  <li>Birth Year: {person.birth_year}</li>
-                  <li>Gender: {person.gender}</li>
-                  <li>Eye Color: {person.eye_color}</li>
-                  <li>Hair Color: {person.hair_color}</li>
-                  <li>Height: {person.height}</li>
-                  <li>Mass: {person.mass}</li>
-                </ul>
-              </div>
-              <div className="w-full md:w-1/2 flex flex-col">
-                <h2 className="text-base font-semibold mb-2">Movies</h2>
-                <hr className="mb-2 border-[#ededed]" />
-                {/* Aqui você pode renderizar os filmes se tiver essa informação */}
-              </div>
-            </div>
-          </div>
-          <div className="flex justify-start mt-auto">
-            <BackButton />
-          </div>
-        </div>
+        <DetailLayout
+          title={person.name}
+          leftTitle="Details"
+          leftContent={details}
+          rightTitle="Movies"
+          rightContent={movies}
+        />
       </div>
     </div>
   );

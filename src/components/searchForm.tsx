@@ -22,7 +22,7 @@ export default function SearchForm() {
           <p className="text-base text-black font-medium mb-2">
             What are you searching for?
           </p>
-          <div className="flex items-center font-bold gap-4 mb-3 text-base">
+          <div className="flex items-center font-bold gap-4 mb-3 text-base text-black">
             {['people', 'movies'].map((option) => (
               <label key={option} className="flex items-center gap-1">
                 <input
@@ -39,7 +39,7 @@ export default function SearchForm() {
           </div>
 
           <input
-            className="w-full px-3 py-2 text-base font-bold border-2 border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-teal"
+            className="w-full px-3 py-2 text-base font-bold border-2 border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-teal text-black"
             placeholder={
               type === 'people'
                 ? 'e.g. Chewbacca, Yoda, Boba Fett'
@@ -68,7 +68,7 @@ export default function SearchForm() {
         <div className="bg-white border-2 border-gray-300 shadow-2xl rounded-md p-6 flex flex-col w-[650px] h-[650px]">
           <h2 className="text-lg font-bold mb-2 text-gray-900">Results</h2>
           <hr className="mb-2 border-gray-300" />
-          <ResultsList results={results} loading={loading} />
+          <ResultsList results={results} loading={loading} type={type} />
         </div>
       </div>
     </div>
