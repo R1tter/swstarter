@@ -1,0 +1,15 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model SearchLog {
+  id        String   @id @default(cuid())
+  query     String
+  type      String
+  createdAt DateTime @default(now())
+}
