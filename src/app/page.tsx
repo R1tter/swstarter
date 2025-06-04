@@ -1,5 +1,5 @@
-import PageHeader from "@/components/pageHeader";
-import SearchForm from "@/components/searchForm";
+import PageHeader from "@/components/PageHeader";
+import SearchForm from "@/components/SearchForm";
 
 
 export default function HomePage() {
