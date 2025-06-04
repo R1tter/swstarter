@@ -7,13 +7,13 @@ export async function GET(req: Request) {
   const type = searchParams.get('type');
   const query = searchParams.get('query');
 
-  // Garantir que o tipo seja suportado
+  // Ensure the provided type is supported
   const validTypes = ['people', 'films'];
   if (!type || !query || !validTypes.includes(type)) {
     return NextResponse.json({ error: 'Invalid query' }, { status: 400 });
   }
 
-  // Mapear o tipo de parâmetro de busca correto
+  // Map the correct search parameter
   const paramMap: Record<string, string> = {
     people: 'name',
     films: 'title',
@@ -30,11 +30,11 @@ export async function GET(req: Request) {
 
     const data = await response.json();
 
-    // Ajuste para filmes: garantir formato compatível
+    // Adjust for films to ensure a consistent format
     let results: { uid: string; name: string; url: string }[] = [];
 
     if (type === 'films') {
-      // Busca todos os filmes e filtra manualmente pelo título (busca parcial)
+      // Fetch all films and filter manually by partial title match
       const allFilmsRes = await fetch('https://www.swapi.tech/api/films');
       const allFilmsData = await allFilmsRes.json();
       if (Array.isArray(allFilmsData.result)) {
@@ -57,7 +57,7 @@ export async function GET(req: Request) {
       return NextResponse.json({ results });
     }
 
-    // Para people, mantém o formato atual
+    // For people keep the API result as is
     return NextResponse.json({ results: data.result || [] });
   } catch (err) {
     console.error('SWAPI.tech fetch error:', err);

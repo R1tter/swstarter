@@ -1,18 +1,25 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import type { ResultItem } from '@/hooks/useSearch';
+import Link from "next/link";
+import type { ResultItem } from "@/hooks/useSearch";
 
 type ResultsListProps = {
   results: ResultItem[];
-  type?: 'people' | 'movies';
+  type?: "people" | "movies";
+  isLoading?: boolean;
 };
 
-export default function ResultsList({ results, loading, type }: ResultsListProps & { loading?: boolean }) {
-  if (loading) {
+export default function ResultsList({
+  results,
+  isLoading,
+  type,
+}: ResultsListProps) {
+  if (isLoading) {
     return (
       <div className="flex flex-col justify-center items-center h-full min-h-[180px]">
-        <span className="text-gray-300 font-bold text-center text-lg">Searching...</span>
+        <span className="text-gray-300 font-bold text-center text-lg">
+          Searching...
+        </span>
       </div>
     );
   }
@@ -20,7 +27,9 @@ export default function ResultsList({ results, loading, type }: ResultsListProps
     return (
       <div className="flex flex-col justify-center items-center h-full min-h-[180px]">
         <span className="text-gray-300 font-bold text-center text-lg">
-          There are zero matches.<br />Use the form to search for People or Movies.
+          There are zero matches.
+          <br />
+          Use the form to search for People or Movies.
         </span>
       </div>
     );
@@ -30,10 +39,11 @@ export default function ResultsList({ results, loading, type }: ResultsListProps
     <ul className="divide-y divide-gray-300">
       {results.map((item) => {
         const id = item.uid;
-        const url = item.url || '';
-        // Se a prop type for passada, usa ela, senão detecta pelo url
-        const itemType: 'people' | 'movies' = type || (url.includes('/films/') ? 'movies' : 'people');
-        const name = item.name || item.properties?.name || 'Unnamed';
+        const url = item.url || "";
+        // Use explicit type if provided, otherwise infer from the URL
+        const itemType: "people" | "movies" =
+          type || (url.includes("/films/") ? "movies" : "people");
+        const name = item.name || item.properties?.name || "Unnamed";
 
         return (
           <li
@@ -46,7 +56,10 @@ export default function ResultsList({ results, loading, type }: ResultsListProps
             >
               {name}
             </span>
-            <Link href={`/${itemType}/${id}`} className="flex-shrink-0 bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600 transition text-[15px] font-bold min-w-[120px] text-center block">
+            <Link
+              href={`/${itemType}/${id}`}
+              className="flex-shrink-0 bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600 transition text-[15px] font-bold min-w-[120px] text-center block"
+            >
               SEE DETAILS
             </Link>
           </li>

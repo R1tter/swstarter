@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 
 declare global {
-  // Permite reutilizar o PrismaClient entre reloads no dev
+  // Reuse PrismaClient between reloads during development
   // eslint-disable-next-line no-var
   var prisma: PrismaClient | undefined;
 }
