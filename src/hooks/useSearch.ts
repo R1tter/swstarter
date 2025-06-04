@@ -23,7 +23,11 @@ export function useSearch() {
     try {
       // Normalize type for the API
       const apiType = type === 'movies' ? 'films' : type;
-      const res = await fetch(`/api/search?type=${apiType}&query=${query}`);
+      const res = await fetch(`/api/search?type=${apiType}&query=${encodeURIComponent(query)}`);
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Error when searching for results.');
+      }
       const raw = await res.json();
 
       const parsedResults = (raw.results || []).map((r: unknown) => {
@@ -43,6 +47,11 @@ export function useSearch() {
       });
     } catch (error) {
       console.error('Search error:', error);
+      if (error instanceof Error) {
+        alert(error.message || 'Erro ao buscar resultados.');
+      } else {
+        alert('Erro ao buscar resultados.');
+      }
     } finally {
       setLoading(false);
       setQuery('');
