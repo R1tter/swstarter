@@ -24,7 +24,7 @@ export default function SearchForm() {
     <div className="flex justify-center items-center min-h-[calc(100vh-45px)]">
       <div className="flex gap-8">
         {/* Search Container */}
-        <div className="bg-gray-50 border-2 border-gray-300 shadow-md rounded-md p-6 flex flex-col justify-between w-[410px] h-[250px]">
+        <div className="bg-white border-2 border-gray-300 shadow-md rounded-md p-6 flex flex-col justify-between w-[410px] h-[250px]">
           <p className="text-base text-black font-medium mb-2">
             What are you searching for?
           </p>

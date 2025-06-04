@@ -45,20 +45,24 @@ export default async function MovieDetails({ params }: Params) {
     <p className="text-sm whitespace-pre-line">{film.properties?.opening_crawl || ''}</p>
   );
 
-  let characterList = <span className="text-sm text-gray-500">No characters available.</span>;
+  let characterList: React.ReactNode = <span className="text-sm text-gray-500">No characters available.</span>;
   if (film.properties?.characters && film.properties.characters.length > 0) {
     const characterPromises = film.properties.characters.map(fetchCharacterName);
     const characters = await Promise.all(characterPromises);
     characterList = (
-      <ul className="text-sm">
-        {characters.map((char) => (
-          <li key={char.id}>
-            <Link href={`/people/${char.id}`} className="text-blue-600 underline hover:text-blue-800">
+      <span className="text-sm">
+        {characters.map((char, idx) => (
+          <span key={char.id}>
+            <Link
+              href={`/people/${char.id}`}
+              className="text-blue-600 underline hover:text-blue-800"
+            >
               {char.name}
             </Link>
-          </li>
+            {idx < characters.length - 1 && ', '}
+          </span>
         ))}
-      </ul>
+      </span>
     );
   }
 
