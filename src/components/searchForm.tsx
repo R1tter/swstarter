@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { useSearch } from '../hooks/useSearch';
 import ResultsList from './ResultsList';
 
@@ -14,6 +15,11 @@ export default function SearchForm() {
     handleSearch,
   } = useSearch();
 
+  // Handlers
+  const handleTypeChange = (option: 'people' | 'movies') => setType(option);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setQuery(e.target.value);
+
   return (
     <div className="flex justify-center items-center min-h-[calc(100vh-45px)]">
       <div className="flex gap-8">
@@ -23,14 +29,14 @@ export default function SearchForm() {
             What are you searching for?
           </p>
           <div className="flex items-center font-bold gap-4 mb-3 text-base text-black">
-            {['people', 'movies'].map((option) => (
+            {(['people', 'movies'] as const).map((option) => (
               <label key={option} className="flex items-center gap-1">
                 <input
                   type="radio"
                   name="type"
                   value={option}
                   checked={type === option}
-                  onChange={() => setType(option as 'people' | 'movies')}
+                  onChange={() => handleTypeChange(option)}
                   className="#0094ff"
                 />
                 {option.charAt(0).toUpperCase() + option.slice(1)}
@@ -46,7 +52,7 @@ export default function SearchForm() {
                 : 'e.g. Return of the Jedi'
             }
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={handleInputChange}
             aria-label={`Search ${type}`}
           />
 
