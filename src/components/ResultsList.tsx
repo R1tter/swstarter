@@ -48,23 +48,24 @@ export default function ResultsList({
         return (
           <li
             key={id}
-            className="flex items-center justify-between gap-4 px-0 py-2 min-h-[44px]"
+            className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 sm:gap-4 px-0 py-2 min-h-[44px]"
           >
             <span
-              className="text-gray-800 font-bold truncate max-w-[60%]"
+              className="text-gray-800 font-bold truncate max-w-full sm:max-w-[60%] text-base sm:text-[17px] mb-2 sm:mb-0"
               title={name}
             >
               {name}
             </span>
             <Link
               href={`/${itemType}/${id}`}
-              className="flex-shrink-0 bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600 transition text-[15px] font-bold min-w-[120px] text-center block"
+              className="flex-shrink-0 bg-green-500 text-white px-4 sm:px-6 py-2 rounded-full hover:bg-green-600 transition text-[15px] font-bold min-w-full sm:min-w-[120px] text-center block cursor-pointer sm:ml-auto sm:mt-0 mt-2"
             >
               SEE DETAILS
             </Link>
           </li>
         );
       })}
+      <hr className="border-t border-gray-200" />
     </ul>
   );
 }

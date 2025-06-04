@@ -22,15 +22,15 @@ export default function SearchForm() {
     setQuery(e.target.value);
 
   return (
-    <div className="flex justify-center items-center min-h-[calc(100vh-45px)]">
-      <div className="flex gap-8">
-        <div className="bg-white border-2 border-gray-300 shadow-md rounded-md p-6 flex flex-col justify-between w-[410px] h-[250px]">
-          <p className="text-base text-black font-medium mb-2">
+    <div className="flex flex-col md:flex-row justify-center items-center min-h-[calc(100vh-45px)] p-2 md:p-0">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-8 w-full max-w-5xl">
+        <div className="bg-white border-2 border-gray-300 shadow-md rounded-md p-4 md:p-6 flex flex-col justify-between w-full md:w-[410px] h-auto md:h-[250px] mb-4 md:mb-0">
+          <p className="text-base text-black font-medium mb-3">
             What are you searching for?
           </p>
           <div className="flex items-center font-bold gap-4 mb-3 text-base text-black">
             {SEARCH_TYPES.map((option) => (
-              <label key={option} className="flex items-center gap-1">
+              <label key={option} className="flex items-center gap-2">
                 <input
                   type="radio"
                   name="type"
@@ -45,7 +45,7 @@ export default function SearchForm() {
           </div>
 
           <input
-            className="w-full px-3 py-2 text-base font-bold border-2 border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-teal text-black"
+            className="w-full px-3 py-2 text-base font-bold border-2 border-gray-300 rounded mb-2 focus:outline-none focus:ring-2 focus:ring-green-teal text-black"
             placeholder={
               type === "people"
                 ? "e.g. Chewbacca, Yoda, Boba Fett"
@@ -59,7 +59,7 @@ export default function SearchForm() {
           <button
             onClick={handleSearch}
             disabled={!query.trim() || isLoading}
-            className={`w-full py-2 text-base font-bold rounded-full transition mt-auto ${
+            className={`w-full py-2 text-base font-bold rounded-full transition ${
               !query.trim()
                 ? "bg-gray-300 text-white cursor-not-allowed"
                 : "bg-green-500 text-white"
@@ -69,7 +69,7 @@ export default function SearchForm() {
           </button>
         </div>
 
-        <div className="bg-white border-2 border-gray-300 shadow-2xl rounded-md p-6 flex flex-col w-[650px] h-[650px]">
+        <div className="bg-white border-2 border-gray-300 shadow-2xl rounded-md p-4 md:p-6 flex flex-col w-full md:w-[650px] h-auto md:h-[650px]">
           <h2 className="text-lg font-bold mb-2 text-gray-900">Results</h2>
           <hr className="mb-2 border-gray-300" />
           <ResultsList results={results} isLoading={isLoading} type={type} />

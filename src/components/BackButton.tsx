@@ -7,7 +7,7 @@ export default function BackButton() {
   return (
     <button
       onClick={() => router.push("/")}
-      className="mt-4 font-bold bg-green-500 text-white px-4 py-2 rounded-full"
+      className="mt-4 font-bold bg-green-500 text-white px-4 py-2 rounded-full cursor-pointer hover:bg-green-600 transition text-lg"
     >
       BACK TO SEARCH
     </button>
