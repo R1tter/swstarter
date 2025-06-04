@@ -66,7 +66,7 @@ export default async function MovieDetails({ params }: Params) {
     );
   }
 
-  // O título correto do filme está em film.properties?.title
+  // The correct movie title is under film.properties?.title
   const movieTitle = film.properties?.title || film.title;
 
   return (

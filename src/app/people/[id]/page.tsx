@@ -4,7 +4,7 @@ import React from 'react';
 
 export const dynamic = 'force-dynamic';
 
-// Tipos externos
+// External types
 interface Person {
   name: string;
   birth_year: string;
@@ -29,7 +29,7 @@ type Params = {
   };
 };
 
-// Utilitário para buscar filmes do personagem
+// Utility to fetch films for the character
 async function getPersonFilms(personId: string): Promise<{ id: string; title: string }[]> {
   const filmsRes = await fetch('https://www.swapi.tech/api/films');
   const filmsData = await filmsRes.json();
@@ -60,7 +60,7 @@ export default async function PersonDetails({ params }: Params) {
     </ul>
   );
 
-  // Busca filmes do personagem de forma isolada
+  // Fetch character films separately
   let movies: React.ReactNode = <span className="text-sm text-gray-500">No movies available.</span>;
   try {
     const films = await getPersonFilms(params.id);
@@ -78,7 +78,7 @@ export default async function PersonDetails({ params }: Params) {
       );
     }
   } catch {
-    // Silencia erros de rede
+    // Suppress network errors
   }
 
   return (

@@ -24,7 +24,6 @@ export default function SearchForm() {
   return (
     <div className="flex justify-center items-center min-h-[calc(100vh-45px)]">
       <div className="flex gap-8">
-        {/* Search Container */}
         <div className="bg-white border-2 border-gray-300 shadow-md rounded-md p-6 flex flex-col justify-between w-[410px] h-[250px]">
           <p className="text-base text-black font-medium mb-2">
             What are you searching for?
@@ -70,7 +69,6 @@ export default function SearchForm() {
           </button>
         </div>
 
-        {/* Results Container */}
         <div className="bg-white border-2 border-gray-300 shadow-2xl rounded-md p-6 flex flex-col w-[650px] h-[650px]">
           <h2 className="text-lg font-bold mb-2 text-gray-900">Results</h2>
           <hr className="mb-2 border-gray-300" />

@@ -21,7 +21,7 @@ export function useSearch() {
     setLoading(true);
 
     try {
-      // Corrige o tipo para a API
+      // Normalize type for the API
       const apiType = type === 'movies' ? 'films' : type;
       const res = await fetch(`/api/search?type=${apiType}&query=${query}`);
       const raw = await res.json();
