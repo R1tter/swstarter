@@ -37,7 +37,7 @@ export default function SearchForm() {
                   value={option}
                   checked={type === option}
                   onChange={() => handleTypeChange(option)}
-                  className="accent-green-500"
+                  className="accent-blue-500 focus:ring-blue-500 focus:ring-2 focus:ring-offset-2 focus:ring-offset-white cursor-pointer"
                 />
                 {option.charAt(0).toUpperCase() + option.slice(1)}
               </label>
