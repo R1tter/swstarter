@@ -1,22 +1,23 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useSearch } from '../hooks/useSearch';
-import ResultsList from './ResultsList';
+import React from "react";
+import { useSearch } from "../hooks/useSearch";
+import ResultsList from "./ResultsList";
 
 export default function SearchForm() {
   const {
     type,
     query,
     results,
-    loading,
+    loading: isLoading,
     setType,
     setQuery,
     handleSearch,
   } = useSearch();
 
-  // Handlers
-  const handleTypeChange = (option: 'people' | 'movies') => setType(option);
+  const SEARCH_TYPES = ["people", "movies"] as const;
+
+  const handleTypeChange = (option: "people" | "movies") => setType(option);
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setQuery(e.target.value);
 
@@ -29,7 +30,7 @@ export default function SearchForm() {
             What are you searching for?
           </p>
           <div className="flex items-center font-bold gap-4 mb-3 text-base text-black">
-            {(['people', 'movies'] as const).map((option) => (
+            {SEARCH_TYPES.map((option) => (
               <label key={option} className="flex items-center gap-1">
                 <input
                   type="radio"
@@ -37,7 +38,7 @@ export default function SearchForm() {
                   value={option}
                   checked={type === option}
                   onChange={() => handleTypeChange(option)}
-                  className="#0094ff"
+                  className="accent-green-500"
                 />
                 {option.charAt(0).toUpperCase() + option.slice(1)}
               </label>
@@ -47,9 +48,9 @@ export default function SearchForm() {
           <input
             className="w-full px-3 py-2 text-base font-bold border-2 border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-teal text-black"
             placeholder={
-              type === 'people'
-                ? 'e.g. Chewbacca, Yoda, Boba Fett'
-                : 'e.g. Return of the Jedi'
+              type === "people"
+                ? "e.g. Chewbacca, Yoda, Boba Fett"
+                : "e.g. Return of the Jedi"
             }
             value={query}
             onChange={handleInputChange}
@@ -58,15 +59,14 @@ export default function SearchForm() {
 
           <button
             onClick={handleSearch}
-            disabled={!query.trim() || loading}
+            disabled={!query.trim() || isLoading}
             className={`w-full py-2 text-base font-bold rounded-full transition mt-auto ${
               !query.trim()
-                ? 'bg-gray-300 text-white cursor-not-allowed'
-                : 'bg-green-500 text-white'
+                ? "bg-gray-300 text-white cursor-not-allowed"
+                : "bg-green-500 text-white"
             }`}
-            style={{ background: !query.trim() ? undefined : undefined }}
           >
-            {loading ? 'Searching...' : 'SEARCH'}
+            {isLoading ? "Searching..." : "SEARCH"}
           </button>
         </div>
 
@@ -74,7 +74,7 @@ export default function SearchForm() {
         <div className="bg-white border-2 border-gray-300 shadow-2xl rounded-md p-6 flex flex-col w-[650px] h-[650px]">
           <h2 className="text-lg font-bold mb-2 text-gray-900">Results</h2>
           <hr className="mb-2 border-gray-300" />
-          <ResultsList results={results} loading={loading} type={type} />
+          <ResultsList results={results} isLoading={isLoading} type={type} />
         </div>
       </div>
     </div>
