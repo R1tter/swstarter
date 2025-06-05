@@ -40,7 +40,6 @@ export default function ResultsList({
       {results.map((item) => {
         const id = item.uid;
         const url = item.url || "";
-        // Use explicit type if provided, otherwise infer from the URL
         const itemType: "people" | "movies" =
           type || (url.includes("/films/") ? "movies" : "people");
         const name = item.name || item.properties?.name || "Unnamed";
