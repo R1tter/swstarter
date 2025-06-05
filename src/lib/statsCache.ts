@@ -1,5 +1,5 @@
 type Stats = {
-  topQueries: { query: string; count: number }[];
+  topQueries: { query: string; count: number; percentage: number }[];
   updatedAt: Date | null;
 };
 

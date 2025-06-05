@@ -36,7 +36,7 @@ export default function ResultsList({
   }
 
   return (
-    <ul className="divide-y divide-gray-300">
+    <ul className="divide-y divide-gray-300 flex-1 overflow-y-auto pr-2 min-h-0 max-h-full">
       {results.map((item) => {
         const id = item.uid;
         const url = item.url || "";
