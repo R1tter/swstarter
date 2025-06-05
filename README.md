@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SwStarter Movie Stats App
 
-## Getting Started
+This project is a web application built with Next.js, Prisma, and Tailwind CSS. It allows users to search for movies and people, view detailed statistics, and visualize data with interactive charts. The backend uses a SQLite database managed by Prisma ORM.
 
-First, run the development server:
+## Features
+- Search for movies and people
+- View detailed statistics and charts
+- Fast, modern UI with Tailwind CSS
+- Data stored in SQLite and managed with Prisma ORM
+- API endpoints for search and stats
+- Ready for local development or Dockerized deployment
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Project Structure
+- `src/` — Main application code (pages, components, hooks, jobs, lib)
+- `prisma/` — Prisma schema, migrations, and SQLite database
+- `Dockerfile`, `docker-compose.yml` — For containerized development and deployment
+- `README_DOCKER.md` — Docker-specific instructions
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## How to run locally
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Clone the repository**
+   ```bash
+   git clone <repo-url>
+   cd swstarter
+   ```
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+3. **Set up the database**
+   - Run migrations and generate Prisma client:
+     ```bash
+     npx prisma migrate dev
+     ```
+   - (Optional) Seed the database if a seed script is available.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. **Environment variables**
+   - Copy `.env.example` to `.env` and adjust the values as needed.
 
-## Learn More
+5. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+   The app will be available at [http://localhost:3000](http://localhost:3000).
 
-To learn more about Next.js, take a look at the following resources:
+6. **Running tests**
+   ```bash
+   npm test
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## How to run with Docker
+See [`README_DOCKER.md`](./README_DOCKER.md) for full Docker instructions.
+- For development with hot reload: `docker-compose up`
+- For production: `docker build -t swstarter .` then `docker run -p 3000:3000 swstarter`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
