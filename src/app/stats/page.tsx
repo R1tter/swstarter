@@ -14,9 +14,9 @@ export default function StatsPage() {
   const topQueries = data.topQueries || [];
 
   return (
-    <main className="bg-[#ededed] min-h-screen flex flex-col items-center">
+    <main className="bg-[#ededed] min-h-screen flex flex-col items-center pb-12">
       <PageHeader />
-      <div className="max-w-xl w-full p-8 bg-white rounded shadow mt-8 relative">
+      <div className="max-w-xl w-full p-8 bg-white rounded shadow mt-8 relative mb-8">
         <h1 className="text-2xl font-bold mb-4 text-gray-800">Search statistics</h1>
         <button
           onClick={refreshStats}

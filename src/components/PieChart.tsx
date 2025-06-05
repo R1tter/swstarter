@@ -21,8 +21,9 @@ export default function PieChart({ data }: { data: TopQuery[] }) {
         fill={colors[i % colors.length]}
         stroke="#fff"
         strokeWidth={2}
+        className="cursor-pointer"
       >
-        <title>{q.query}: {q.percentage}%</title>
+        <title>{`${q.query}: ${q.count} (${q.percentage}%)`}</title>
       </path>
     );
   });
