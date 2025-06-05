@@ -53,4 +53,11 @@ See [`README_DOCKER.md`](./README_DOCKER.md) for full Docker instructions.
 - For development with hot reload: `docker-compose up`
 - For production: `docker build -t swstarter .` then `docker run -p 3000:3000 swstarter`
 
----
+## API Endpoints
+
+The backend exposes the following endpoints for stats:
+
+- `GET /api/stats` — Returns the current statistics data.
+- `POST /api/stats/refresh` — Recomputes and refreshes the statistics data. Use this to trigger a stats update.
+
+You can test these endpoints using Postman, Insomnia, or similar tools.
