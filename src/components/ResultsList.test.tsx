@@ -25,14 +25,14 @@ describe('ResultsList', () => {
 
   it('renders empty state', () => {
     render(<ResultsList results={[]} isLoading={false} />);
-    expect(screen.getByText(/zero matches/i)).toBeInTheDocument();
+    expect(screen.getByText(/No results/i)).toBeInTheDocument();
   });
 
   it('renders results with correct links and names', () => {
     render(<ResultsList results={mockResults} isLoading={false} />);
     expect(screen.getByText('Luke Skywalker')).toBeInTheDocument();
     expect(screen.getByText('The Empire Strikes Back')).toBeInTheDocument();
-    expect(screen.getAllByText('SEE DETAILS')).toHaveLength(2);
+    expect(screen.getAllByText('VIEW DETAILS')).toHaveLength(2);
     expect(screen.getByText('Luke Skywalker').closest('li')?.querySelector('a')).toHaveAttribute('href', '/people/1');
     expect(screen.getByText('The Empire Strikes Back').closest('li')?.querySelector('a')).toHaveAttribute('href', '/movies/2');
   });

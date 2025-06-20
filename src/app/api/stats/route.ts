@@ -2,7 +2,7 @@ import { getStats } from '@/lib/statsCache';
 import { startStatsCron } from '@/jobs/recomputeStats';
 import { NextResponse } from 'next/server';
 
-startStatsCron(); // start the cron once
+startStatsCron(); // start the cron only once
 
 export async function GET() {
   const stats = getStats();

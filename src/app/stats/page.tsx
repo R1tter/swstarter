@@ -17,16 +17,16 @@ export default function StatsPage() {
     <main className="bg-[#ededed] min-h-screen flex flex-col items-center pb-12">
       <PageHeader />
       <div className="max-w-xl w-full p-8 bg-white rounded shadow mt-8 relative mb-8">
-        <h1 className="text-2xl font-bold mb-4 text-gray-800">Search statistics</h1>
+        <h1 className="text-2xl font-bold mb-4 text-gray-800">Search Statistics</h1>
         <button
           onClick={refreshStats}
           disabled={refreshing}
           className="mb-6 font-bold bg-green-500 text-white px-4 py-2 rounded-full cursor-pointer hover:bg-green-600 transition text-lg"
         >
-          {refreshing ? "Updating..." : "Update"}
+          {refreshing ? "Refreshing..." : "Refresh"}
         </button>
         {topQueries.length === 0 ? (
-          <div>No searches registered.</div>
+          <div>No searches recorded.</div>
         ) : (
           <PieChart data={topQueries} />
         )}

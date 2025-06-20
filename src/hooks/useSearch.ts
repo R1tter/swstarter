@@ -21,23 +21,28 @@ export function useSearch() {
     setLoading(true);
 
     try {
-      // Normalize type for the API
+      // Normalize the type for the API
       const apiType = type === 'movies' ? 'films' : type;
       const res = await fetch(`/api/search?type=${apiType}&query=${encodeURIComponent(query)}`);
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.error || 'Error when searching for results.');
+        throw new Error(errorData.error || 'Failed to fetch results.');
       }
       const raw = await res.json();
 
-      const parsedResults = (raw.results || []).map((r: unknown) => {
-        const item = r as ResultItem & { properties?: { name?: string } };
-        return {
-          uid: item.uid,
-          url: item.url || '',
-          name: item.name || item.properties?.name || 'Unnamed',
+      type RawResult = {
+        uid?: string;
+        name?: string;
+        url?: string;
+        properties?: {
+          name?: string;
         };
-      });
+      };
+      const parsedResults = (raw.results || []).map((r: RawResult) => ({
+        uid: r.uid ?? '',
+        url: r.url ?? '',
+        name: r.name || r.properties?.name || 'Unnamed',
+      }));
 
       setResults(parsedResults);
       await fetch('/api/track', {
@@ -48,9 +53,9 @@ export function useSearch() {
     } catch (error) {
       console.error('Search error:', error);
       if (error instanceof Error) {
-        alert(error.message || 'Erro ao buscar resultados.');
+        alert(error.message || 'Failed to fetch results.');
       } else {
-        alert('Erro ao buscar resultados.');
+        alert('Failed to fetch results.');
       }
     } finally {
       setLoading(false);

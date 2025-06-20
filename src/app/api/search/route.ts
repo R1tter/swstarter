@@ -10,7 +10,7 @@ export async function GET(req: Request) {
   // Ensure the provided type is supported
   const validTypes = ['people', 'films'];
   if (!type || !query || !validTypes.includes(type)) {
-    return NextResponse.json({ error: 'Invalid query' }, { status: 400 });
+    return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
   }
 
   // Map the correct search parameter
@@ -30,11 +30,11 @@ export async function GET(req: Request) {
 
     const data = await response.json();
 
-    // Adjust for films to ensure a consistent format
+    // Normalize films for consistent output
     let results: { uid: string; name: string; url: string }[] = [];
 
     if (type === 'films') {
-      // Fetch all films and filter manually by partial title match
+      // Fetch all films and filter manually by partial title
       const allFilmsRes = await fetch('https://www.swapi.tech/api/films');
       const allFilmsData = await allFilmsRes.json();
       if (Array.isArray(allFilmsData.result)) {
