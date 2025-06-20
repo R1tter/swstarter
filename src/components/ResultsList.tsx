@@ -27,7 +27,7 @@ export default function ResultsList({
     return (
       <div className="flex flex-col justify-center items-center h-full min-h-[180px]">
         <span className="text-gray-300 font-bold text-center text-lg">
-          There are zero matches.
+          No results found.
           <br />
           Use the form to search for People or Movies.
         </span>
@@ -59,7 +59,7 @@ export default function ResultsList({
               href={`/${itemType}/${id}`}
               className="flex-shrink-0 bg-green-500 text-white px-4 sm:px-6 py-2 rounded-full hover:bg-green-600 transition text-[15px] font-bold min-w-full sm:min-w-[120px] text-center block cursor-pointer sm:ml-auto sm:mt-0 mt-2"
             >
-              SEE DETAILS
+              VIEW DETAILS
             </Link>
           </li>
         );

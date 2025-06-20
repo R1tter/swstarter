@@ -29,7 +29,7 @@ type Params = {
   };
 };
 
-// Utility to fetch films for the character
+// Helper to fetch films for the character
 async function getPersonFilms(personId: string): Promise<{ id: string; title: string }[]> {
   const filmsRes = await fetch('https://www.swapi.tech/api/films');
   const filmsData = await filmsRes.json();
@@ -60,7 +60,7 @@ export default async function PersonDetails({ params }: Params) {
     </ul>
   );
 
-  // Fetch character films separately
+  // Fetch the character's films separately
   let movies: React.ReactNode = <span className="text-sm text-gray-500">No movies available.</span>;
   try {
     const films = await getPersonFilms(params.id);

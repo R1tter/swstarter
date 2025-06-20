@@ -66,7 +66,7 @@ export default async function MovieDetails({ params }: Params) {
     );
   }
 
-  // The correct movie title is under film.properties?.title
+  // The correct movie title is in film.properties?.title
   const movieTitle = film.properties?.title || film.title;
 
   return (
@@ -74,7 +74,7 @@ export default async function MovieDetails({ params }: Params) {
       <div className="flex flex-1 w-full justify-center items-start pt-[40px]">
         <DetailLayout
           title={movieTitle}
-          leftTitle="Opening Crawl"
+          leftTitle="Overview"
           leftContent={openingCrawl}
           rightTitle="Characters"
           rightContent={characterList}
